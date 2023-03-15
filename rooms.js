@@ -22,20 +22,21 @@ const displayRoomsData = async (rooms) => {
       price,
       _id,
     } = room;
+
     roomsContainer.innerHTML += `
  <div class="col">
  <div class="card h-100">
-   <img src=${images.picture_Url} class="card-img-top " alt="..." style=" height: 300px;
+   <img src=${images.listing_url} class="card-img-top " alt="..." style=" height: 300px;
    object-fit: fill;">
    <div class="card-body">
      <h5 class="card-title">${name}</h5>
      <p>Number_of_reviews : ${number_of_reviews}</p>
-     <p>Price : ${price.$numberDecimal}</p>
+     <h2>Price : ${price.$numberDecimal}</h2>
     
      <p class="card-text">${property_type}</p>
      <p class="card-text">${summary}</p>
    </div>
-   <button class="btn btn-info btn-lg"  role="button" onclick='addToCart(${_id})'
+   <button class="btn btn-info btn-lg"  role="button" onclick="addToCart('${_id}')"
                 >Add to cart</button>
  </div>
 </div>

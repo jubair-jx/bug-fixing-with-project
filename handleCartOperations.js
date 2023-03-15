@@ -1,35 +1,51 @@
 const addToCart = async (id) => {
   const data = await fetch(`ROOMS.json`);
   const result = await data.json();
-  const { name, summary, property_type, images,number_of_reviews,price,_id} = result.find((item) => item._id == id);
-  const cartItems=getItemsFromStorage()
-  
-  
-  cartItems.push({ name, summary, property_type, images,number_of_reviews,price,_id});
-  localStorage.setItem('saved-Cart', JSON.stringify(cartItems))
+
+  const {
+    name,
+    summary,
+    property_type,
+    images,
+    number_of_reviews,
+    price,
+    _id,
+  } = result.find((item) => item._id == id);
+  const cartItems = getItemsFromStorage();
+
+  cartItems.push({
+    name,
+    summary,
+    property_type,
+    images,
+    number_of_reviews,
+    price,
+    _id,
+  });
+  localStorage.setItem("saved-Cart", JSON.stringify(cartItems));
+  displayCartItems();
   //const cartItemsContainer = document.getElementById("cart-items");
 };
 
 const getItemsFromStorage = () => {
   let itemsArray = [];
-  const cartItems = localStorage.getItem("savedCart");
+  const cartItems = localStorage.getItem("saved-Cart");
   if (cartItems) {
-    itemsArray = (cartItems);
+    itemsArray = JSON.parse(cartItems);
   }
   return itemsArray;
 };
 
-
-
-const displayCartItems=()=>{
-    const cartItemsContainer = document.getElementById("cart-items");
-    const cartItems=getItemsFromStorage()
-    cartItemsContainer.innerHTML=""
-    cartItems?.forEach((item)=>{
-        const { name, property_type, images,number_of_reviews,price,_id}=item
-        cartItemsContainer.innerHTML += `
+const displayCartItems = () => {
+  const cartItemsContainer = document.getElementById("cart-items");
+  const cartItems = getItemsFromStorage();
+  cartItemsContainer.innerHTML = "";
+  console.log(cartItems);
+  cartItems?.forEach((item) => {
+    const { name, property_type, images, number_of_reviews, price, _id } = item;
+    cartItemsContainer.innerHTML += `
         <tr>
-        <th scope="row">${name.slice(0,26)}</th>
+        <th scope="row">${name.slice(0, 26)}</th>
         <td><span> <i onclick='deleteItemFromCart(${_id})' class="mx-2 bi bi-trash3 text-danger"></i>
         </span> 
         <span> 
@@ -38,15 +54,14 @@ const displayCartItems=()=>{
        
         </tr>
        
-        `
-    })
-   
-}
-displayCartItems()
+        `;
+  });
+};
+displayCartItems();
 
-const deleteItemFromCart=(id)=>{
-    const cartItems=getItemsFromStorage()
-    const filteredItems=cartItems.filter((item)=>item._id==id)
-    localStorage.setItem('savedCart', JSON.stringify(filteredItems))
-    displayCartItems()
-}
+const deleteItemFromCart = (id) => {
+  const cartItems = getItemsFromStorage();
+  const filteredItems = cartItems.filter((item) => item._id == id);
+  localStorage.setItem("savedCart", JSON.stringify(filteredItems));
+  displayCartItems();
+};
