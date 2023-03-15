@@ -9,17 +9,18 @@ const tagLines = [
   "Explore a world of beauty",
   "Embrace adventure, embrace life",
   "Create unforgettable memories",
+  "However unforgettable that",
+  "No one unforgettable memories",
 ];
-
-function generateTag(arr, interval) {
+const randomText = (arr, interval) => {
   setInterval(() => {
     const randomIndex = Math.floor(Math.random() * arr.length);
-    const randomTagLine = tagLines[randomIndex];
-    document.getElementById("taglines").innerText = randomTagLine;
+    const randomTagLines = tagLines[randomIndex];
+    document.getElementById("tagline").innerText = randomTagLines;
   }, interval);
-}
+};
 
-generateTag(tagLines, 2000);
+randomText(tagLines, 3000);
 
 document
   .getElementById("random-room-btn")
@@ -30,12 +31,10 @@ document
     const randomIndex = Math.floor(Math.random() * 10);
     const modalBody = document.getElementById("random-room-info-modal-body");
     const { name, summary, property_type, images, review_scores } = result[9];
-    
-    
 
     const reviews = document.createElement("ol");
     if (review_scores.scores) {
-      reviews.setAttribute('class',"list-group")
+      reviews.setAttribute("class", "list-group");
 
       object.keys(review_scores.scores).forEach((key) => {
         reviews.innerHTML += `
@@ -49,7 +48,6 @@ document
       reviews.innerHTML = "No reviews found";
     }
 
-    
     modalBody.innerHTML = `
     <div class="col">
     <div class="card h-100">
@@ -69,9 +67,4 @@ document
     </div>
    </div>
     `;
-    
   });
-
-
-
- 
